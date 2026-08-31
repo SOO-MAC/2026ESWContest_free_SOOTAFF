@@ -1,9 +1,14 @@
 # 🤖 SOOTAFF
+> 컨퍼런스 운영 효율화를 위한 다목적행사 보조 스태프 로봇 개발
+
+<br>
 
 ## 🎯 What is SOOTAFF?
 
 > SOOTAFF는 행사 준비부터 진행 보조, 종료 후 정리까지  
 > 반복적인 행사 운영 업무를 자동화하기 위한 ROS2 기반 행사 보조 로봇입니다.
+
+<br>
 
 ## 👥 Team
 
@@ -15,11 +20,15 @@
 | 박종훈 | GUI / Scout 제어 |
 | 김루하 | 하드웨어 설계 |
 
+<br>
+
 ## 📌 Why we need SOOTAFF?
 
 > 행사장에서는 명찰과 다과 배치, 마이크 전달, 테이블 정리와 같은
-> 반복적인 업무가 지속적으로 발생합니다.
+> 반복적인 업무가 지속적으로 발생하며 이는 운영 인력의 부담 및 피로 증가로 이어집니다
 > SOOTAFF는 이러한 업무를 하나의 로봇 시스템으로 통합하여 수행합니다.
+
+### SOOTAF Overview
 
 **SCOUT MINI + Lift + 5-DoF Manipulator + Vision + GUI**
 
@@ -29,17 +38,17 @@
 
 과정을 하나의 시스템에서 수행합니다.
 
----
+<br>
 
-## 🎬 Three Missions
+## 🎬 Mission Description
 
 SOOTAFF는 행사 운영 흐름에 맞춰 세 가지 Mission으로 구성됩니다.
 
 | Mission | Stage | Task |
 | :---: | :---: | --- |
-| 🪪 **MODE 1** | Before Event | 명찰 · 다과 · 물병 자리 세팅 |
-| 🎤 **MODE 2** | During Event | 질문자 좌석 이동 · 마이크 전달 및 회수 |
-| 🧹 **MODE 3** | After Event | 테이블 정리 · 분실물 및 쓰레기 수거 |
+| 🪪 **MODE 1** | 행사 전 | 명찰 · 다과 · 물병 자리 세팅 |
+| 🎤 **MODE 2** | 행사 중 | 질문자 좌석 이동 · 마이크 전달 및 회수 |
+| 🧹 **MODE 3** | 행사 후 | 테이블 정리 · 분실물 및 쓰레기 수거 |
 
 ### MODE 1 — Seat Setup 🪪
 
@@ -119,32 +128,5 @@ SCOUT에 전달됩니다.
 
 SOOTAFF는 ROS 2의 **Topic / Service 기반 분산 노드 구조**로 구성됩니다.
 
-```text
-                         ┌───────────────┐
-                         │      GUI      │
-                         └───────┬───────┘
-                                 │
-                                 ▼
-                    ┌────────────────────────┐
-                    │  Mission Task Manager  │
-                    └───────────┬────────────┘
-                                │
-             ┌──────────────────┼──────────────────┐
-             │                  │                  │
-             ▼                  ▼                  ▼
-      ┌────────────┐     ┌─────────────┐    ┌────────────┐
-      │ Detection  │     │Scout Control│    │Lift Control│
-      └──────┬─────┘     └──────┬──────┘    └────────────┘
-             │                  │
-             ▼                  ▼
-      ┌────────────┐          Nav2
-      │Arm Control │
-      └──────┬─────┘
-             │
-             ▼
-      ┌─────────────┐
-      │Motor Control│
-      └──────┬──────┘
-             │
-             ▼
-        Dynamixel Arm
+<img width="925" height="421" alt="image" src="https://github.com/user-attachments/assets/9376670a-66da-4196-ace5-1078445cf27b" />
+
