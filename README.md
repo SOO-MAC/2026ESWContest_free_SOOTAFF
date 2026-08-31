@@ -133,7 +133,37 @@ SOOTAFF는 ROS 2의 **Topic / Service 기반 분산 노드 구조**로 구성됩
 
 <br>
 
-## Node Description
+## ✅ Node Description
 
-`**GUI Node**`
+`GUI Node`
+> MODE 선택 및 좌석 지정, 미션 시작·진행 상태 표시
+
+`Mission Task Manager Node`
+> 미션별 Scout 이동·인지·로봇팔 작업 순서 관리
+
+`Scout Control Node`
+> MODE 선택 및 좌석 지정, 미션 시작·진행 상태 표시
+
+`Table Mapper Node`
+> : SLAM 맵에서 테이블을 검출하고 이동 목표 좌표 생성
+
+`Nav2 Stack`
+> 현재 위치와 목표 위치를 기반으로 경로 생성 및 주행 제어
+
+`cmd_vel_gate`
+> : 리프트 상태 및 안전 조건을 확인하여 Scout 최종 속도 명령 차단·허용
+
+`Lift Control Node`
+> 상승·하강 제어 및 Scout 이동 가능 상태 관리
+
+`Detection Node`
+> 객체 인식 및 물체 종류·위치 정보 검출
+
+`Arm Control Node`
+> 인식 결과를 기반으로 Pick & Place 및 마이크 전달·회수 수행
+
+`Motor Control Node`
+> 계산된 관절 명령을 Dynamixel 모터에 전달하여 로봇팔 구동
+
+
 
