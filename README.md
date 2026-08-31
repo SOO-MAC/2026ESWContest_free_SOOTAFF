@@ -3,13 +3,6 @@
 
 <br>
 
-## 🎯 What is SOOTAFF?
-
-> SOOTAFF는 행사 준비부터 진행 보조, 종료 후 정리까지  
-> 반복적인 행사 운영 업무를 자동화하기 위한 ROS2 기반 행사 보조 로봇입니다.
-
-<br>
-
 ## 👥 Team
 
 | 이름 | 역할 |
@@ -22,13 +15,21 @@
 
 <br>
 
+## 🎯 What is SOOTAFF?
+
+> SOOTAFF는 행사 준비부터 진행 보조, 종료 후 정리까지  
+> 반복적인 행사 운영 업무를 자동화하기 위한 ROS2 기반 행사 보조 로봇입니다.
+
+
+<br>
+
 ## 📌 Why we need SOOTAFF?
 
 > 행사장에서는 명찰과 다과 배치, 마이크 전달, 테이블 정리와 같은
 > 반복적인 업무가 지속적으로 발생하며 이는 운영 인력의 부담 및 피로 증가로 이어집니다
 > SOOTAFF는 이러한 업무를 하나의 로봇 시스템으로 통합하여 수행합니다.
 
-### Overview
+### SOOTAFF Overview
 
 **SCOUT MINI + Lift + 5-DoF Manipulator + Vision + GUI**
 
@@ -122,11 +123,17 @@ SCOUT에 전달됩니다.
 전체 Mission을 처음부터 반복하지 않고
 필요한 단계만 복구하도록 구성했습니다.
 
----
+<br>
 
-# 🧩 System Architecture
+## 🧩 System Architecture
 
 SOOTAFF는 ROS 2의 **Topic / Service 기반 분산 노드 구조**로 구성됩니다.
 
 <img width="925" height="421" alt="image" src="https://github.com/user-attachments/assets/9376670a-66da-4196-ace5-1078445cf27b" />
+
+<br>
+
+## Node Description
+
+`**GUI Node**`
 
