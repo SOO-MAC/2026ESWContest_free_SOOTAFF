@@ -1,11 +1,9 @@
 # 🤖 SOOTAFF
 
-### Autonomous Event Staff Robot
+## 🎯 What is SOOTAFF?
 
-> **Set Up. Assist. Clean Up.**
->
 > SOOTAFF는 행사 준비부터 진행 보조, 종료 후 정리까지  
-> 반복적인 행사 운영 업무를 자동화하기 위한 ROS 2 기반 행사 보조 로봇입니다.
+> 반복적인 행사 운영 업무를 자동화하기 위한 ROS2 기반 행사 보조 로봇입니다.
 
 ## 👥 Team
 
@@ -14,15 +12,14 @@
 | 나승원 | 팀장 / 로봇팔 제어 |
 | 박기령 | 비전 / 객체 탐지 |
 | 김태현 | 비전 / 객체 탐지 / 리프트 제어 |
-| 박종훈 | 시스템 통합 / Scout 제어 |
-| 김루하 | 설계 |
+| 박종훈 | GUI / Scout 제어 |
+| 김루하 | 하드웨어 설계 |
 
-## 🎯 What is SOOTAFF?
+## 📌 Why we need SOOTAFF?
 
-행사장에서는 명찰과 다과 배치, 마이크 전달, 테이블 정리와 같은
-반복적인 업무가 지속적으로 발생합니다.
-
-SOOTAFF는 이러한 업무를 하나의 로봇 시스템으로 통합하여 수행합니다.
+> 행사장에서는 명찰과 다과 배치, 마이크 전달, 테이블 정리와 같은
+> 반복적인 업무가 지속적으로 발생합니다.
+> SOOTAFF는 이러한 업무를 하나의 로봇 시스템으로 통합하여 수행합니다.
 
 **SCOUT MINI + Lift + 5-DoF Manipulator + Vision + GUI**
 
@@ -34,7 +31,7 @@ SOOTAFF는 이러한 업무를 하나의 로봇 시스템으로 통합하여 수
 
 ---
 
-# 🎬 Three Missions
+## 🎬 Three Missions
 
 SOOTAFF는 행사 운영 흐름에 맞춰 세 가지 Mission으로 구성됩니다.
 
