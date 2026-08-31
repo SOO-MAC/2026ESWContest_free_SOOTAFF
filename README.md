@@ -77,7 +77,7 @@ ArUco Marker를 이용해 명찰의 원래 위치를 찾고,
 
 <br>
 
-# ✨ Key Features
+## ✨ Key Features
 
 ### 🚗 Autonomous Navigation
 
