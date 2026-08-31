@@ -28,9 +28,7 @@
 > 반복적인 업무가 지속적으로 발생하며 이는 운영 인력의 부담 및 피로 증가로 이어집니다
 > SOOTAFF는 이러한 업무를 하나의 로봇 시스템으로 통합하여 수행합니다.
 
----
-
-### SOOTAF Overview
+### Overview
 
 **SCOUT MINI + Lift + 5-DoF Manipulator + Vision + GUI**
 
