@@ -1,0 +1,51 @@
+scout_control_node:
+  ros__parameters:
+
+    # table_mapper가 생성하는 행사장 좌표 파일
+    venue_yaml: ~/.ros/venue_tables.yaml
+
+    # Mission Manager -> Scout
+    move_service: /scout/move
+    cancel_service: /scout/cancel
+
+    # 리프트 하강 완료 = Scout 이동 허가
+    # 실제 리프트 토픽명 확정 후 필요하면 변경
+    move_enabled_topic: /scout/move_enabled
+
+    emergency_stop_topic: /scout/emergency_stop
+
+    # Nav2 이동 제한 시간
+    navigation_timeout_sec: 180.0
+
+    # 0.0 = move_enabled=True가 될 때까지 계속 대기
+    wait_for_move_enabled_timeout_sec: 0.0
+
+    # 실제 Scout가 pickup_zone에 놓여 있을 때만 true 사용
+    set_initial_pose_from_pickup: false
+
+
+velocity_smoother:
+  ros__parameters:
+
+    input_topic: /cmd_vel_raw
+    output_topic: /cmd_vel_pre_gate
+
+    update_period_sec: 0.05
+
+    linear_step: 0.02
+    angular_step: 0.02
+
+    command_timeout_sec: 0.5
+
+
+cmd_vel_gate:
+  ros__parameters:
+
+    input_topic: /cmd_vel_pre_gate
+    output_topic: /cmd_vel
+
+    move_enabled_topic: /scout/move_enabled
+    emergency_stop_topic: /scout/emergency_stop
+
+    publish_period_sec: 0.05
+    command_timeout_sec: 0.25

@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+
+<package format="3">
+
+  <name>my_scout_control</name>
+  <version>0.0.0</version>
+
+  <description>
+    Scout Mini autonomous navigation and motion safety control
+  </description>
+
+  <maintainer email="parkjonghoon@todo.todo">
+    parkjonghoon
+  </maintainer>
+
+  <license>TODO: License declaration</license>
+
+
+  <!-- ROS2 Python -->
+  <exec_depend>rclpy</exec_depend>
+
+
+  <!-- Messages -->
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+
+
+  <!-- Nav2 -->
+  <exec_depend>nav2_bringup</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+
+  <exec_depend>nav2_map_server</exec_depend>
+  <exec_depend>nav2_amcl</exec_depend>
+
+  <exec_depend>nav2_controller</exec_depend>
+  <exec_depend>nav2_smoother</exec_depend>
+  <exec_depend>nav2_planner</exec_depend>
+  <exec_depend>nav2_behaviors</exec_depend>
+  <exec_depend>nav2_bt_navigator</exec_depend>
+  <exec_depend>nav2_waypoint_follower</exec_depend>
+  <exec_depend>nav2_lifecycle_manager</exec_depend>
+
+  <exec_depend>nav2_simple_commander</exec_depend>
+  <exec_depend>soomac_interfaces</exec_depend>
+
+
+  <!-- Python -->
+  <exec_depend>python3-yaml</exec_depend>
+
+
+  <!-- Launch -->
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+
+  <!--
+    MoveScout.srv가 실제로 들어 있는
+    팀 interface package를 여기에 추가할 것.
+  -->
+
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+
+</package>

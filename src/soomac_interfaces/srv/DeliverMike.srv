@@ -1,0 +1,89 @@
+# Task 2 Arm Control -> Motor Control
+#
+# Task 2의 마이크 전달 과정에서 Arm Control이 계산한
+# J1~J5 joint trajectory의 한 구간을 Motor Control에 전달해 실행한다.
+#
+# 이 서비스는 "마이크 전달 전체 시퀀스"를 Motor Control에 맡기는 용도가 아니다.
+# 사람 손 위치 도착 후 대기, 전달 시점 판단, gripper release 등은
+# Arm Control이 계속 담당한다.
+#
+# ★ ExecutePickPlace.srv와의 차이
+# ExecutePickPlace.srv는 Pick -> Place 과정과 gripper open/close를
+# 하나의 연속된 실행 흐름으로 Motor Control에 맡긴다.
+#
+# 반면 Task 2의 마이크 전달은
+#
+#   trajectory 실행
+#     -> Arm Control로 제어권 복귀
+#     -> 전달 위치에서 일정 시간 대기
+#     -> Arm Control 판단
+#     -> 별도 gripper release
+#
+# 처럼 중간에 Arm Control이 다시 판단해야 한다.
+#
+# 따라서 gripper 동작은 이 서비스에 포함하지 않으며,
+# 필요한 시점에 MikeGripper.srv를 별도로 호출한다.
+#
+# ★ joint_ticks 배열 규칙
+# point_count개의 J1~J5 tick trajectory를 1차원 배열로 펼쳐 전달한다.
+#
+# 예:
+#   point_count = 3
+#
+#   P0 = [J1, J2, J3, J4, J5]
+#   P1 = [J1, J2, J3, J4, J5]
+#   P2 = [J1, J2, J3, J4, J5]
+#
+#   joint_ticks =
+#   [P0_J1, P0_J2, P0_J3, P0_J4, P0_J5,
+#    P1_J1, P1_J2, P1_J3, P1_J4, P1_J5,
+#    P2_J1, P2_J2, P2_J3, P2_J4, P2_J5]
+#
+# 따라서 joint_ticks 길이는 반드시 point_count * 5여야 한다.
+
+
+int32[] joint_ticks
+# Arm Control이 계산한 J1~J5 joint trajectory.
+# point_count x 5 형태의 tick 경로를 1차원 배열로 펼친 값.
+
+
+uint32 point_count
+# trajectory point 개수.
+# joint_ticks 길이는 반드시 point_count * 5여야 한다.
+
+
+int32 profile_velocity
+# trajectory 실행 시 사용할 Dynamixel Profile Velocity.
+# 0 이하이면 Motor Control에 정의된 기본 profile velocity를 사용한다.
+
+
+float64 timeout_sec
+# trajectory 실행 및 최종 자세 도달을 기다릴 최대 시간, 단위 sec.
+# 0 이하이면 Motor Control에 정의된 기본 timeout을 사용한다.
+
+
+string label
+# trajectory 구간을 구분하기 위한 로그 식별용 문자열.
+# Motor Control의 동작 판단에는 사용하지 않는다.
+#
+# 예:
+#   RIGHT_BASKET_PICK_APPROACH
+#   HAND_DELIVERY_MOVE
+#   HAND_DELIVERY_RETURN
+#   MIC_RETURN_MOVE
+
+
+---
+
+bool success
+# true  = trajectory 실행 및 최종 자세 도달 성공
+# false = 통신 오류 / timeout / 잘못된 trajectory 등으로 실행 실패
+
+
+string message
+# 실행 결과 또는 실패 사유.
+
+
+int32[] final_joint_ticks
+# trajectory 종료 후 실제로 읽은 J1~J5 Present Position tick.
+# 실행 완료 자세 확인 및 다음 Arm Control 동작의 기준으로 사용할 수 있다.

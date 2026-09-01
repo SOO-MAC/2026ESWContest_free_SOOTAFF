@@ -1,0 +1,68 @@
+# pick & place 요청 (mission 1, 3에서 사용)
+#
+# 제어단이 category에 맞는 스캔 자세로 이동 -> 검출 -> pick -> place 자세 복귀 -> place
+# 까지 한 호출 안에서 전부 수행한다. Task Manager는 "무엇을 어디에" 만 지정한다.
+#
+# ★ 왜 요청에 target 좌표를 안 싣나
+#   제어단이 스캔 자세로 이동한 뒤에야 그 물체가 카메라에 잡힌다. 즉 Task Manager는
+#   요청 시점에 대상 좌표를 물리적으로 알 수 없다. 대신 응답에 실제로 집은 물체를
+#   picked로 돌려주어 "요청한 category vs 실제 집은 물체"를 사후 대조할 수 있게 한다.
+#   (로그에 좌표가 남아 헛집기 원인 추적이 가능하다)
+#
+# ★ 왜 place를 절대좌표가 아니라 offset으로 주나
+#   Task Manager가 아는 좌표는 전부 flange 기준이고 팔이 움직이는 순간 무효가 된다.
+#   place는 팔이 여러 번 움직인 뒤에 일어나므로 절대좌표를 넘기면 반드시 틀어진다.
+#   제어단이 캐싱해둔 ArUco world 좌표에 offset을 더해 최종 위치를 만든다.
+#
+# ★ offset 적용 규칙: base 축 기준 (마커 회전 미적용)
+#   place_world = aruco_world + place_offset   (단순 벡터합)
+#   DetectionArray.aruco_yaw_deg 로 offset을 회전시키지 않는다.
+#   테이블이 비스듬해도 배치는 항상 로봇 base 축 기준으로 정렬된다.
+#
+# ★ 단위: 길이 m, 각도 deg (REP-103)
+
+std_msgs/Header header
+# header.stamp : 요청 시각
+
+string category
+# 집을 대상. Detection.msg의 CATEGORY_* 상수 중 하나.
+# 제어단은 이 값으로 어느 스캔 자세로 갈지 결정한다.
+
+# ---- place 위치 결정 방식 ----
+uint8 PLACE_ARUCO_OFFSET=0
+# place_world = aruco_world + place_offset
+# 제어단에 ArUco world 캐시가 없으면 place 자세에서 마커를 관측해 먼저 캐싱한다.
+# 캐시는 /arm/begin_seat 를 받을 때까지 유지된다.
+
+uint8 PLACE_FIXED=1
+# 제어단이 category별로 미리 정해둔 고정 위치에 놓는다 (쓰레기통, 귀중품함 등).
+# 이 모드에서는 place_offset을 무시한다.
+
+uint8 place_mode
+
+geometry_msgs/Point place_offset
+# PLACE_ARUCO_OFFSET 모드에서만 사용. ArUco 기준 상대 위치, 단위 m.
+# 예) name_tag = (0, 0, 0) -> 마커 위치 그대로
+
+float32 place_yaw_deg
+# 놓을 때 그리퍼 추가 회전각, 단위 deg. 보통 0.
+# (집을 때 회전각은 제어단이 검출한 Detection.yaw_deg 로 자체 판단한다)
+
+---
+
+bool success
+
+bool task_complete
+
+bool nothing_detected
+# true = 해당 category가 스캔 자세에서 하나도 안 보임.
+# IK 실패 / 파지 실패와 구분하기 위한 필드.
+#   mission1: 필요 개수를 못 채운 것이므로 실패 처리
+#   mission3: "다 치웠다" 종료 신호로 사용 (TM이 개수를 셀 필요가 없어진다)
+
+string message
+# 실패 사유 (예: "IK 해 없음", "그리퍼 파지 실패", "ArUco 미검출로 캐싱 불가")
+
+Detection picked
+# 실제로 집은 물체. success == true 일 때만 유효.
+# 요청한 category와 대조하거나 로그에 남기는 용도.

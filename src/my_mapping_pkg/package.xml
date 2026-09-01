@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd"
+schematypens="http://www.w3.org/2001/XMLSchema"?>
+
+<package format="3">
+
+  <name>my_mapping_pkg</name>
+  <version>0.0.0</version>
+
+  <description>
+    Event assistant robot mapping and table waypoint generation
+  </description>
+
+  <maintainer email="parkjonghoon@todo.todo">
+    parkjonghoon
+  </maintainer>
+
+  <!-- 팀 저장소의 실제 라이선스에 맞게 최종 제출 전에 수정 -->
+  <license>TODO: License declaration</license>
+
+
+  <!-- ========================= -->
+  <!-- ROS2 Python -->
+  <!-- ========================= -->
+
+  <exec_depend>rclpy</exec_depend>
+
+
+  <!-- ========================= -->
+  <!-- table_mapper.py -->
+  <!-- ========================= -->
+
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>visualization_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+
+
+  <!-- ========================= -->
+  <!-- Mapping -->
+  <!-- ========================= -->
+
+  <exec_depend>slam_toolbox</exec_depend>
+  <exec_depend>rplidar_ros</exec_depend>
+
+
+  <!-- ========================= -->
+  <!-- RealSense / Fusion -->
+  <!-- ========================= -->
+
+  <exec_depend>realsense2_camera</exec_depend>
+  <exec_depend>depthimage_to_laserscan</exec_depend>
+  <exec_depend>yolo_detector</exec_depend>
+  <exec_depend>scan_merger_pkg</exec_depend>
+
+
+  <!-- ========================= -->
+  <!-- Launch -->
+  <!-- ========================= -->
+
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+
+  <!-- ========================= -->
+  <!-- Python libraries -->
+  <!-- ========================= -->
+
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-sklearn</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <exec_depend>python3-yaml</exec_depend>
+
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+
+</package>

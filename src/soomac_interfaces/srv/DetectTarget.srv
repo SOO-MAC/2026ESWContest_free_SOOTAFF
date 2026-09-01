@@ -1,0 +1,9 @@
+# (선택) 특정 category의 최신 검출 1건을 요청/응답으로 받고 싶을 때 사용.
+# 현재 구조는 "topic 계속 publish + payload 없는 Trigger" 패턴이라 필수는 아님.
+# /arm/*, /missionN/start_detect, /scout/control_done 등은 std_srvs/Trigger 유지 권장.
+
+string category    # Detection.msg의 CATEGORY_* 상수 중 하나
+---
+bool success
+string message     # 실패 사유 등
+Detection detection  # success == true 일 때 가장 가까운 물체 1건

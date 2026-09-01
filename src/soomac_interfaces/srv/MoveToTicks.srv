@@ -1,0 +1,67 @@
+# J1~J5 단일 자세 이동 요청
+#
+# Arm Control -> Motor Control
+#
+# Arm Control이 계산하거나 미리 정의한 J1~J5 목표 tick으로
+# 로봇팔을 직접 이동시킬 때 사용한다.
+#
+# Pick & Place 전체 경로 실행용이 아니라,
+# 검색 자세 / 초기 자세 / 전달 준비 자세처럼
+# "하나의 목표 자세"로 이동할 때 사용하는 범용 서비스다.
+#
+# Motor Control은 현재 joint tick을 읽은 뒤 목표 tick까지
+# 내부 보간 및 가감속을 적용하여 이동시키고,
+# 실제 도달한 tick을 응답으로 반환한다.
+#
+# ★ 좌표계나 IK는 이 서비스에서 다루지 않는다.
+#   요청 값은 이미 Arm Control에서 계산된 Dynamixel tick이다.
+#
+# ★ joint 순서
+#   goal_ticks = [J1, J2, J3, J4, J5]
+#   정확히 5개의 값이 들어와야 한다.
+
+
+int32[] goal_ticks
+# 목표 J1~J5 Dynamixel tick.
+# 배열 순서: [J1, J2, J3, J4, J5]
+
+
+string label
+# 이동 목적을 구분하기 위한 로그용 문자열.
+# Motor Control의 동작 판단에는 사용하지 않는다.
+#
+# 예:
+#   "INITIAL_POSE"
+#   "NAME_TAG_SEARCH"
+#   "HAND_SEARCH_POSE"
+#   "MIC_UP_READY"
+
+
+int32 profile_velocity
+# Dynamixel Profile Velocity.
+# 0 이하이면 Motor Control에 정의된 기본 속도를 사용한다.
+
+
+float32 timeout_sec
+# 목표 자세 도달을 기다릴 최대 시간, 단위 sec.
+# 0 이하이면 Motor Control에 정의된 기본 timeout을 사용한다.
+
+
+---
+
+bool success
+# true  = 허용 오차 안으로 목표 자세에 도달
+# false = 통신 오류 / timeout / 잘못된 요청 등으로 이동 실패
+
+
+string message
+# 실행 결과 또는 실패 사유.
+#
+# 예:
+#   "INITIAL_POSE reached"
+#   "Arm waypoint 도달 시간 초과"
+
+
+int32[] reached_ticks
+# 이동 종료 시 실제로 읽은 J1~J5 tick.
+# success == true일 때 정상적인 최종 자세 확인용.

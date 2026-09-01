@@ -1,0 +1,98 @@
+# Pick & Place trajectory 실행 요청
+#
+# Arm Control -> Motor Control
+#
+# Mission 1 / Mission 3에서 Arm Control이
+# 검출 좌표를 base 좌표로 변환하고 IK 및 경로 계획까지 완료한 뒤,
+# 실제 J1~J5 trajectory와 gripper open/close tick을
+# Motor Control에 전달해 실행시킨다.
+#
+# ★ Task Manager -> Arm Control의 PickPlace.srv와 역할이 다르다.
+#
+# PickPlace.srv:
+#   "무엇을 어디에 놓을지" 요청하는 상위 레벨 서비스
+#
+# ExecutePickPlace.srv:
+#   Arm Control이 계산을 끝낸 뒤 실제 motor trajectory를 실행하는
+#   하위 레벨 서비스
+#
+# Motor Control은 XYZ / yaw / Detection / ArUco / IK를 알 필요가 없다.
+# 이미 계산된 joint tick path만 실행한다.
+#
+#
+# ★ waypoint_names
+#
+# joint_ticks의 각 point가 Pick & Place 과정의 어느 구간인지 나타낸다.
+#
+# 주요 named waypoint:
+#
+#   START
+#   PICK_ABOVE
+#   PICK
+#   PICK_RETURN
+#   PLACE_ABOVE
+#   PLACE
+#   PLACE_RETURN
+#
+# Motor Control은 이를 이용해 구간을 나누고,
+# 필요한 시점에 gripper open / close와 J5 회전을 수행한다.
+#
+#
+# ★ joint_ticks 배열 규칙
+#
+# point_count개의 J1~J5 tick trajectory를 1차원으로 펼친다.
+#
+# len(joint_ticks) == point_count * 5
+#
+# 이어야 하며,
+#
+# len(waypoint_names) == point_count
+#
+# 이어야 한다.
+
+
+int32[] joint_ticks
+# Arm Control이 계산한 전체 J1~J5 trajectory.
+# point_count x 5 배열을 1차원으로 펼친 값.
+
+
+string[] waypoint_names
+# 각 trajectory point의 이름.
+#
+# 일반 중간 waypoint는 빈 문자열("")일 수 있으며,
+# 주요 동작 전환 지점에만 START, PICK, PLACE 등의 이름이 들어간다.
+
+
+uint32 point_count
+# trajectory point 개수.
+#
+# joint_ticks 길이     = point_count * 5
+# waypoint_names 길이  = point_count
+
+
+int32 gripper_open_tick
+# 이번 물체를 놓거나 집기 전 사용할 gripper open 위치.
+# 물체 종류별 open tick은 Arm Control에서 결정해서 전달한다.
+
+
+int32 gripper_close_tick
+# 물체를 파지할 때 사용할 gripper close 위치.
+# 물체 종류별 close tick은 Arm Control에서 결정해서 전달한다.
+
+
+---
+
+bool success
+# 전체 Pick & Place motor trajectory 실행 성공 여부.
+
+
+string message
+# 실행 결과 또는 실패 사유.
+
+
+int32[] final_joint_ticks
+# 전체 동작 종료 후 실제 J1~J5 tick.
+
+
+int32 final_gripper_tick
+# 전체 동작 종료 후 실제 gripper tick.

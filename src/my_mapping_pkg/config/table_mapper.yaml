@@ -1,0 +1,27 @@
+table_mapper:
+  ros__parameters:
+    map_topic: /map
+    map_frame: map
+    base_frame: base_link
+    output_yaml: ~/.ros/venue_tables.yaml
+    occupied_threshold: 65
+    voxel_size_m: 0.08
+    dbscan_eps_m: 0.34
+    dbscan_min_samples: 4
+    min_cluster_points: 18
+    min_short_m: 0.85
+    max_short_m: 1.9
+    min_long_m: 1.7
+    max_long_m: 2.9
+    min_rect_area_m2: 1.5
+    max_rect_area_m2: 4.5
+    size_dbscan_eps_m: 0.2
+    min_repeated_count: 3
+    approach_offset_m: 0.3
+    approach_free_radius_m: 0.22
+    row_tolerance_m: 0.7
+    number_left_to_right: true
+    use_start_override: false
+    start_x_override: 0.0
+    start_y_override: 0.0
+    start_yaw_deg_override: 0.0
