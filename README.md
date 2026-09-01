@@ -142,7 +142,7 @@ SOOTAFF는 ROS 2의 **Topic / Service 기반 분산 노드 구조**로 구성됩
 - 미션별 Scout 이동·인지·로봇팔 작업 순서 관리
 
 `Scout Control Node`
-- MODE 선택 및 좌석 지정, 미션 시작·진행 상태 표시
+- 목표 좌표를 전달받아 Nav2 기반 자율 주행 및 이동 제어
 
 `Table Mapper Node`
 - SLAM 맵에서 테이블을 검출하고 이동 목표 좌표 생성
